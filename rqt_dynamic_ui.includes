@@ -1,0 +1,4 @@
+.
+include
+src/QPathEdit/QPathEdit
+src/DialogMaster

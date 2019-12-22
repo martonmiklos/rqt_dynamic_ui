@@ -1,0 +1,6 @@
+[submodule "src/QPathEdit"]
+	path = src/QPathEdit
+	url = https://github.com/Skycoder42/QPathEdit.git
+[submodule "src/DialogMaster"]
+	path = src/DialogMaster
+	url = https://github.com/Skycoder42/DialogMaster.git

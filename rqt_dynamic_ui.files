@@ -1,0 +1,11 @@
+include/rqt_dynamic_ui/rqt_dynamic_ui_widget.h
+include/rqt_dynamic_ui/rqt_dynamic_ui.h
+src/DialogMaster/dialogmaster.cpp
+src/DialogMaster/dialogmaster.h
+src/QPathEdit/QPathEdit/qpathedit.cpp
+src/QPathEdit/QPathEdit/qpathedit.h
+src/rqt_dynamic_ui/rqt_dynamic_ui_widget.cpp
+src/rqt_dynamic_ui/rqt_dynamic_ui.cpp
+ui/rqt_dynamic_ui/rqt_dynamic_ui_widget.ui
+package.xml
+plugin.xml

@@ -1,0 +1,13 @@
+<library path="lib/librqt_dynamic_ui">
+  <class name="DynamicUI" type="rqt_dynamic_ui::DynamicUI" base_class_type="rqt_gui_cpp::Plugin">
+    <description></description>
+    <qtgui>
+      <group>
+        <label>Visualization</label>
+        <icon type="theme">folder</icon>
+      </group>
+      <label>Dynamic UI</label>
+      <statustip></statustip>
+    </qtgui>
+  </class>
+</library>
