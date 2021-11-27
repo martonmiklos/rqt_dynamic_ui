@@ -2,3 +2,7 @@
 include
 src/QPathEdit/QPathEdit
 src/DialogMaster
+/home/mm/Projektek/rescube/r16_ws/build/rqt_dynamic_ui
+/opt/ros/noetic/include
+/usr/include/x86_64-linux-gnu/qt5
+ui/rqt_dynamic_ui

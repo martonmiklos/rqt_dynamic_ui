@@ -1,10 +1,16 @@
-#ifndef RQT_DYNAMIC_UI_WIDGET
-#define RQT_DYNAMIC_UI_WIDGET
+#pragma once
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 
 #include <rqt_gui_cpp/plugin.h>
+#include <ros/publisher.h>
+#include <ros/master.h>
 
+#include "topic_tools/shape_shifter.h"
+
+class QAbstractButton;
+class QAbstractSlider;
+class QAbstractSpinBox;
 
 namespace Ui {
 class DynamicUIWidget;
@@ -25,12 +31,31 @@ private slots:
     void on_toolButtonReload_clicked();
 
 private slots:
-    void on_patheditUIFile_pathChanged(const QString &path);
+    void on_patheditUiFile_pathChanged(const QString &path);
+
+    void on_toolButtonShowErrors_clicked();
 
 private:
     Ui::DynamicUIWidget *ui;
+    ros::NodeHandle m_nodeHandle;
 
     QWidget *m_widget = nullptr;
-};
 
-#endif // RQT_DYNAMIC_UI_WIDGET
+    void makeWidgetsRosConnections(QObject *parentWidget);
+
+    void makeSliderDialConnections(QAbstractSlider *slider);
+    void makeSpinBoxConnections(QAbstractSpinBox *spinBox);
+    void makeButtonConnections(QAbstractButton *button);
+
+    topic_tools::ShapeShifter *getShapeShifterForType(const QString &dataType);
+
+    static bool isNumericDataType(const QString dataType);
+    static bool isFloatDataType(const QString dataType);
+    static bool isValidStdDataType(const QString dataType);
+    void addErrorString(const QString &string);
+    QString m_errors;
+    QList<topic_tools::ShapeShifter*> m_shapeShifters;
+
+    template <typename T> void publishNumber(T value, const QString dataType, topic_tools::ShapeShifter *shifter, const ros::Publisher &publisher);
+    void publishString(const QString &value, const QString dataType, topic_tools::ShapeShifter *shifter, const ros::Publisher &publisher);
+};

@@ -10,6 +10,7 @@ project(rqt_dynamic_ui)
 find_package(catkin REQUIRED COMPONENTS
   rqt_gui
   rqt_gui_cpp
+  topic_tools
 )
 
 ## System dependencies are found with CMake's conventions
@@ -52,7 +53,6 @@ set(rqt_dynamic_ui_INCLUDE_DIRECTORIES
 add_definitions( -DQ_DIALOG_MASTER_EXPORT )
 
 catkin_package(
-  INCLUDE_DIRS ${rqt_dynamic_ui_INCLUDE_DIRECTORIES}
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS rqt_gui rqt_gui_cpp
 )
