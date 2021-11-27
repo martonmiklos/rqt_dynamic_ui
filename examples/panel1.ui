@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="2">
+   <item row="0" column="0">
     <widget class="QSlider" name="horizontalSlider">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -23,12 +23,6 @@
       <string>sliderTest</string>
      </property>
     </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QDial" name="dial"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="lineEdit"/>
    </item>
   </layout>
  </widget>

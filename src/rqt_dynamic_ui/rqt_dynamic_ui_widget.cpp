@@ -133,13 +133,15 @@ void DynamicUIWidget::makeSliderDialConnections(QAbstractSlider *slider)
             connect(slider, &QAbstractSlider::sliderReleased, this, [=] () {
                 publishNumber<int>(slider->value(), dataType, shifter, publisher);
             });
-        } else if (slider->property("publishEvent").toString() == "valueChanged") {
+        } else if (slider->property("publishEvent").toString() == "valueChanged"
+                   || !slider->property("publishEvent").isValid()) {
             connect(slider, &QAbstractSlider::valueChanged, this, [=] (int value) {
                 publishNumber<int>(value, dataType, shifter, publisher);
             });
         } else {
             addErrorString(tr("The '%1' publishEvent is not supported for QDial/QSlider!\n"
-                              "Possible publishEvent properties: 'valueChanged', 'sliderReleased')"));
+                              "Possible publishEvent properties: 'valueChanged', 'sliderReleased')")
+                           .arg(slider->property("publishEvent").toString()));
         }
     }
 }

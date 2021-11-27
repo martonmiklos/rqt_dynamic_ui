@@ -8,8 +8,12 @@ Now you can create this without any coding using the rqt_dynamic_ui plugin!
 
  - Design your user interface with QtDesigner or the Designer component of the QtCreator
  - Add topic pubish/subscription properties to your widgets
+ ![Design your user interface with QtDesigner](https://raw.githubusercontent.com/martonmiklos/rqt_dynamic_ui/master/screenshots/qtcreator.gif "Design your user interface with QtDesigner")
+
  - Load the saved ui file to rqt with the rqt_dynamic_ui plugin
- - Enjoy your user interface!
+ ![Load the saved ui file to rqt with the rqt_dynamic_ui plugin](https://raw.githubusercontent.com/martonmiklos/rqt_dynamic_ui/master/screenshots/rqt.gif "Load the saved ui file to rqt with the rqt_dynamic_ui plugin")
+ 
+ - Profit!
 
 ## TODO 
 
