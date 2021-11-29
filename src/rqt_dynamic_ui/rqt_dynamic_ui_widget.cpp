@@ -49,7 +49,10 @@ DynamicUIWidget::DynamicUIWidget(QWidget *parent) :
 DynamicUIWidget::~DynamicUIWidget()
 {
     delete ui;
+    if (m_widget)
+        delete m_widget;
     qDeleteAll(m_shapeShifters);
+    m_shapeShifters.clear();
 }
 
 void DynamicUIWidget::saveSettings(qt_gui_cpp::Settings &plugin_settings,
@@ -79,11 +82,24 @@ void DynamicUIWidget::on_patheditUiFile_pathChanged(const QString &path)
                 m_widget->deleteLater();
             }
 
+            qDeleteAll(m_shapeShifters);
+            m_shapeShifters.clear();
+
             m_widget = loader.load(&file, this);
             file.close();
+
+            if (!loader.errorString().isEmpty()) {
+                QMessageBox::warning(this, tr("Error"), tr("Failed to load the %1 ui file:\n%2")
+                                     .arg(path, loader.errorString()));
+                m_widget->deleteLater();
+                m_widget = nullptr;
+                return;
+            }
             ui->gridLayoutLoadedUI->addWidget(m_widget);
             makeWidgetsRosConnections(m_widget);
             ui->toolButtonShowErrors->setVisible(!m_errors.isEmpty());
+        } else {
+            QMessageBox::warning(this, tr("Error"), tr("Unable to open the %1 ui file for reading").arg(path));
         }
     }
 }
