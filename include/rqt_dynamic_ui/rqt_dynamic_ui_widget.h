@@ -29,10 +29,9 @@ public:
 
 private slots:
     void on_toolButtonReload_clicked();
+    void uiCustomContextMenuRequested(const QPoint &pos);
 
-private slots:
     void on_patheditUiFile_pathChanged(const QString &path);
-
     void on_toolButtonShowErrors_clicked();
 
 private:
@@ -58,4 +57,7 @@ private:
 
     template <typename T> void publishNumber(T value, const QString dataType, topic_tools::ShapeShifter *shifter, const ros::Publisher &publisher);
     void publishString(const QString &value, const QString dataType, topic_tools::ShapeShifter *shifter, const ros::Publisher &publisher);
+
+    bool m_menuVisible = true;
+    void setMenuVisible(bool visible);
 };

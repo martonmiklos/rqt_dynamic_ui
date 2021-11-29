@@ -7,6 +7,7 @@
 #include <QtWidgets/QAbstractSpinBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QSpinBox>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
 #include "ros/message_traits.h"
@@ -60,6 +61,7 @@ void DynamicUIWidget::saveSettings(qt_gui_cpp::Settings &plugin_settings,
 {
     Q_UNUSED(plugin_settings)
     instance_settings.setValue("lastUIFilePath", ui->patheditUiFile->path());
+    instance_settings.setValue("menuVisible", m_menuVisible);
 }
 
 void DynamicUIWidget::restoreSettings(const qt_gui_cpp::Settings &plugin_settings,
@@ -69,6 +71,7 @@ void DynamicUIWidget::restoreSettings(const qt_gui_cpp::Settings &plugin_setting
     QString uiPath = instance_settings.value("lastUIFilePath").toString();
     if (!uiPath.isEmpty())
         ui->patheditUiFile->setPath(uiPath);
+    setMenuVisible(instance_settings.value("menuVisible", true).toBool());
 }
 
 void DynamicUIWidget::on_patheditUiFile_pathChanged(const QString &path)
@@ -97,6 +100,8 @@ void DynamicUIWidget::on_patheditUiFile_pathChanged(const QString &path)
             }
             ui->gridLayoutLoadedUI->addWidget(m_widget);
             makeWidgetsRosConnections(m_widget);
+            m_widget->setContextMenuPolicy(Qt::CustomContextMenu);
+            connect(m_widget, &QWidget::customContextMenuRequested, this, &DynamicUIWidget::uiCustomContextMenuRequested);
             ui->toolButtonShowErrors->setVisible(!m_errors.isEmpty());
         } else {
             QMessageBox::warning(this, tr("Error"), tr("Unable to open the %1 ui file for reading").arg(path));
@@ -361,6 +366,14 @@ void DynamicUIWidget::publishString(const QString &value, const QString dataType
     publisher.publish( *shifter );
 }
 
+void DynamicUIWidget::setMenuVisible(bool visible)
+{
+    if (m_menuVisible != visible) {
+        m_menuVisible = visible;
+        ui->horizontalWidget->setVisible(visible);
+    }
+}
+
 template <typename T> void DynamicUIWidget::publishNumber(T value, const QString dataType,
                                                           topic_tools::ShapeShifter *shifter, const ros::Publisher &publisher)
 {
@@ -432,6 +445,15 @@ template <typename T> void DynamicUIWidget::publishNumber(T value, const QString
 void DynamicUIWidget::on_toolButtonReload_clicked()
 {
     on_patheditUiFile_pathChanged(ui->patheditUiFile->path());
+}
+
+void DynamicUIWidget::uiCustomContextMenuRequested(const QPoint &pos)
+{
+    QMenu contextMenu;
+    contextMenu.addAction(tr("%1 menu").arg(m_menuVisible ? tr("Hide") : tr("Show")));
+    if (contextMenu.exec(m_widget->mapToGlobal(pos))) {
+        setMenuVisible(!m_menuVisible);
+    }
 }
 
 void DynamicUIWidget::on_toolButtonShowErrors_clicked()
